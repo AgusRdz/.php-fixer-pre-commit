@@ -41,7 +41,8 @@ export PATH="$PATH:$HOME/.composer/vendor/bin"
 
 ## Move laravel fixet to /home
 echo -e "$Cyan \n Creating Laravel fixer $Color_Off"
-mv laravel-fixer.dist ~/.php_cs.dist
+cd ~
+cp php-cs-fixer-pre-commit/laravel-fixer.dist ~/.php_cs.dist
 
 ## Add alias to create pre-co
 echo -e "$Cyan \n Creating alias to use pre-commit feature $Color_Off"
