@@ -12,7 +12,7 @@ Purple='\033[0;35m'       # Purple
 Cyan='\033[0;36m'         # Cyan
 
 ## Update package manager cache
-echo -e "$Yellow \n Installing Apache2 $Color_Off"
+echo -e "$Yellow \n Updating package manager cache $Color_Off"
 sudo apt-get update
 
 ## Install Composer Dependencies
@@ -35,7 +35,7 @@ echo -e "$Green \n Composer was installed globally, run composer command to disp
 
 ## Install php-cs-fixer
 echo -e "$Cyan \n Installing php-cs-fixer globally $Color_Off"
-composer global require friendsof/php-cs-fixer
+composer global require friendsofphp/php-cs-fixer
 echo -e "$Cyan \n Exporting $PATH $Color_Off"
 export PATH="$PATH:$HOME/.composer/vendor/bin"
 
