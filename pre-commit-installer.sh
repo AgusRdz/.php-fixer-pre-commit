@@ -49,18 +49,22 @@ else
 	echo -e "$Cyan \n php-cs-fixer is already installed $Color_Off"
 fi
 
+sudo chown -R $USER $HOME/.composer
+
 ## Move laravel fixet to /home
 echo -e "$Cyan \n Creating Laravel fixer $Color_Off"
 cd ~
-cp php-cs-fixer-pre-commit/laravel-fixer.dist ~/.php_cs.dist
+cp $(pwd)/php-cs-fixer-pre-commit/laravel-fixer.dist ~/.php_cs.dist
 
 ## Add alias to create pre-co
 if [ ! -f ~/.bash_aliases ]; then
-	sudo touch ~/.bash_aliases
+	touch ~/.bash_aliases
 fi
 
 echo -e "$Cyan \n Creating alias to use pre-commit feature $Color_Off"
-sudo echo "alias pre-commit-init='cp ~/php-cs-fixer-pre-commit/pre-commit $(pwd)/.git/hooks/ && sudo chmod +x $(pwd)/.git/hooks/pre-commit" >> ~/.bash_aliases
+echo "alias pre-commit-init='cp ~/php-cs-fixer-pre-commit/pre-commit $(pwd)/.git/hooks/ && sudo chmod +x $(pwd)/.git/hooks/pre-commit'" >> ~/.bash_aliases
 source ~/.bash_aliases
-rm composer-setup.php
+if [ ! -f ~//composer-setup.php ]; then
+	rm ~/composer-setup.php
+fi
 echo -e "$Green \n Setting up complete, in order to use the pre-commit feature go to root project and run pre-commit-init $Color_Off"
