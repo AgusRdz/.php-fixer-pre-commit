@@ -12,11 +12,11 @@ Cyan='\033[0;36m'         # Cyan
 
 ## Update package manager cache
 echo -e "$Yellow \n Updating package manager cache $Color_Off"
-sudo apt-get update
+apt-get update
 
 ## Install Composer Dependencies
 echo -e "$Cyan \n Installing Composer Dependencies $Color_Off"
-sudo apt-get install curl php-cli php-mbstring git unzip -y
+apt-get install curl php-cli php-mbstring git unzip -y
 
 cd ~
 ## Get Composer installer
@@ -39,17 +39,19 @@ fi
 
 ## Install php-cs-fixer
 echo -e "$Yellow \n Checking if php-cs-fixer is already installed $Color_Off"
-if ! hash php-cs-fixer 2>/dev/null; then
+if ! hash 'php-cs-fixer' 2>/dev/null; then
 	echo -e "$Cyan \n Installing php-cs-fixer globally $Color_Off"
-	sudo composer global require friendsofphp/php-cs-fixer
-	echo -e "$Cyan \n Exporting $PATH $Color_Off"
-	export PATH="~/.composer/vendor/bin:$PATH"
-	# export PATH="$PATH:$HOME/.composer/vendor/bin"
+	composer global require friendsofphp/php-cs-fixer
+	if [ ! "$(grep -r 'export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc)" ]; then
+		echo -e "$Cyan \n Exporting $PATH $Color_Off"
+		echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bashrc
+	fi
 else
 	echo -e "$Green \n php-cs-fixer is already installed $Color_Off"
 fi
 
-sudo chown -R $USER $HOME/.composer
+currentuser=$(who | awk '{print $1}')
+sudo chown -R $currentuser:$currentuser $HOME/.composer
 
 ## Move laravel fixet to /home
 echo -e "$Cyan \n Creating Laravel fixer $Color_Off"
@@ -61,7 +63,7 @@ if [ ! "$(grep '^alias pre-commit-init=' ~/.bashrc)" ]; then
 	echo "alias pre-commit-init='cp $HOME/php-cs-fixer/pre-commit \$(pwd)/.git/hooks/pre-commit && sudo chmod +x \$(pwd)/.git/hooks/pre-commit'" >> ~/.bashrc
 fi
 
-source ~/.bashrc
+source $HOME/.bashrc
 
 if [ -f ~//composer-setup.php ]; then
 	rm ~/composer-setup.php
