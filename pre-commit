@@ -1,17 +1,12 @@
 #!/usr/bin/env php
 <?php
-    // where your project root directory is located
     $PROJECT_ROOT = dirname(__DIR__, 2).'/';
-    // PHP executable binary
     $PHP_BIN = exec('which php');
-    // php-cs-fixer executable
-    $PHPCSFIXER_BIN = 'php-cs-fixer';
-    // php-cs-fixer config file
+    $PHPCSFIXER_BIN = exec('which php-cs-fixer');
     $PHPCSFIXER_CONFIG_FILE = getenv('HOME').'/.php_cs.dist';
-    // php-cs-fixer.phar will fix files whose names fit this regular expression
     $PHP_CS_FIXER_FILE_PATTERN = '/\.(php|twig|yml)$/';
+    $options = getopt('i', ['install']);
 
-    $options = getopt('i', array('install'));
     if (isset($options['i']) || isset($options['install'])) {
         install();
         echo "Git hook successfully installed" . PHP_EOL;
@@ -20,7 +15,6 @@
 
     function install() {
         global $PROJECT_ROOT;
-        //create link
         $link = $PROJECT_ROOT . '.git/hooks/pre-commit';
         @unlink($link);
         exec(sprintf('ln -s %s %s', __FILE__, $link));
@@ -39,7 +33,8 @@
     function runPhpLint() {
         global $PHP_BIN, $PROJECT_ROOT, $PHP_CS_FIXER_FILE_PATTERN;
 
-        $filesWithErrors = array();
+        $filesWithErrors = [];
+
         foreach (getStashedFiles($PHP_CS_FIXER_FILE_PATTERN) as $file) {
             $output = '';
             $returnCode = null;
@@ -55,7 +50,8 @@
     function runPhpCsFixer() {
         global $PHPCSFIXER_BIN, $PHP_CS_FIXER_FILE_PATTERN, $PROJECT_ROOT, $PHPCSFIXER_CONFIG_FILE;
 
-        $changedFiles = array();
+        $changedFiles = [];
+
         foreach (getStashedFiles($PHP_CS_FIXER_FILE_PATTERN) as $file) {
             $output = '';
             $returnCode = null;
@@ -64,7 +60,7 @@
                 $changedFiles[] = $file;
             }
         }
-        
+
         return $changedFiles;
     }
 
@@ -86,6 +82,14 @@
 
         foreach ($phpCSErrors as $error) {
             echo "\t".$error . PHP_EOL;
+        }
+    }
+
+    $changedFiles = getStashedFiles($PHP_CS_FIXER_FILE_PATTERN);
+
+    if(count($changedFiles) > 0){
+        foreach ($changedFiles as $file) {
+            exec(sprintf('git add %s', $file));
         }
     }
 
