@@ -23,7 +23,7 @@ cd ~
 ## Get Composer installer
 echo -e "$Yellow \n Checking if Composer is already installed $Color_Off"
 if ! hash composer 2>/dev/null; then
-	echo -e "$Green \n Getting Composer installer $Color_Off"
+	echo -e "$Cyan \n Getting Composer installer $Color_Off"
 	curl -sS https://getcomposer.org/installer -o composer-setup.php
 
 	## Verify Composer installer
@@ -31,11 +31,11 @@ if ! hash composer 2>/dev/null; then
 	php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 
 	## Set Composer globally
-	echo -e "$Cyan \n Setting Composer globally $Color_Off"
+	echo -e "$Purple \n Setting Composer globally $Color_Off"
 	sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 	echo -e "$Green \n Composer was installed globally, run composer command to display all commands supported $Color_Off"
 else
-	echo -e "$Cyan \n Composer is already installed $Color_Off"
+	echo -e "$Green \n Composer is already installed $Color_Off"
 fi
 
 ## Install php-cs-fixer
@@ -43,7 +43,7 @@ echo -e "$Yellow \n Checking if php-cs-fixer is already installed $Color_Off"
 if ! hash php-cs-fixer 2>/dev/null; then
 	echo -e "$Cyan \n Installing php-cs-fixer globally $Color_Off"
 	composer global require friendsofphp/php-cs-fixer
-	echo -e "$Cyan \n Exporting $PATH $Color_Off"
+	echo -e "$Purple \n Exporting $PATH $Color_Off"
 	export PATH="$PATH:$HOME/.composer/vendor/bin"
 else
 	echo -e "$Green \n php-cs-fixer is already installed $Color_Off"
@@ -56,12 +56,13 @@ echo -e "$Cyan \n Creating Laravel fixer $Color_Off"
 cd ~
 cp $(pwd)/php-cs-fixer-pre-commit/laravel-fixer.dist ~/.php_cs.dist
 
-echo -e "$Cyan \n Creating alias to use pre-commit feature $Color_Off"
+echo -e "$Purple \n Creating alias to use pre-commit feature $Color_Off"
 if [ ! "$(grep '^alias pre-commit-init=' ~/.bashrc)" ]; then
-	echo "alias pre-commit-init='cp $HOME/php-cs-fixer-pre-commit/pre-commit.example \$(pwd)/.git/hooks/pre-commit.example && mv $(pwd)/.git/hooks/pre-commit.example \$(pwd)/.git/hooks/pre-commit && sudo chmod +x \$(pwd)/.git/hooks/pre-commit'" >> ~/.bashrc
+	echo "alias pre-commit-init='cp $HOME/php-cs-fixer-pre-commit/pre-commit.example \$(pwd)/.git/hooks/pre-commit.example && mv \$(pwd)/.git/hooks/pre-commit.example \$(pwd)/.git/hooks/pre-commit && sudo chmod +x \$(pwd)/.git/hooks/pre-commit'" >> ~/.bashrc
 fi
 
 source ~/.bashrc
+
 if [ -f ~//composer-setup.php ]; then
 	rm ~/composer-setup.php
 fi
