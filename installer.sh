@@ -57,7 +57,7 @@ cp $(pwd)/php-cs-fixer/laravel-fixer.dist ~/.php_cs.dist
 
 echo -e "$Cyan \n Creating alias to use pre-commit feature $Color_Off"
 if [ ! "$(grep '^alias pre-commit-init=' ~/.bashrc)" ]; then
-	echo "alias pre-commit-init='cp $HOME/php-cs-fixer-pre-commit/pre-commit "$(pwd)"/.git/hooks/pre-commit && sudo chmod +x "$(pwd)"/.git/hooks/pre-commit'" >> ~/.bashrc
+	echo "alias pre-commit-init='cp $HOME/php-cs-fixer/pre-commit \$(pwd)/.git/hooks/pre-commit && sudo chmod +x \$(pwd)/.git/hooks/pre-commit'" >> ~/.bashrc
 fi
 
 source ~/.bashrc
