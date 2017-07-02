@@ -21,9 +21,9 @@ sudo apt-get install curl php-cli php-mbstring git unzip -y
 
 cd ~
 ## Get Composer installer
-echo -e "$Cyan \n Checking if Composer is already installed $Color_Off"
+echo -e "$Yellow \n Checking if Composer is already installed $Color_Off"
 if ! hash composer 2>/dev/null; then
-	echo -e "$Cyan \n Getting Composer installer $Color_Off"
+	echo -e "$Green \n Getting Composer installer $Color_Off"
 	curl -sS https://getcomposer.org/installer -o composer-setup.php
 
 	## Verify Composer installer
@@ -39,14 +39,14 @@ else
 fi
 
 ## Install php-cs-fixer
-echo -e "$Cyan \n Checking if php-cs-fixer is already installed $Color_Off"
+echo -e "$Yellow \n Checking if php-cs-fixer is already installed $Color_Off"
 if ! hash php-cs-fixer 2>/dev/null; then
 	echo -e "$Cyan \n Installing php-cs-fixer globally $Color_Off"
 	composer global require friendsofphp/php-cs-fixer
 	echo -e "$Cyan \n Exporting $PATH $Color_Off"
 	export PATH="$PATH:$HOME/.composer/vendor/bin"
 else
-	echo -e "$Cyan \n php-cs-fixer is already installed $Color_Off"
+	echo -e "$Green \n php-cs-fixer is already installed $Color_Off"
 fi
 
 sudo chown -R $USER $HOME/.composer
@@ -64,7 +64,7 @@ fi
 echo -e "$Cyan \n Creating alias to use pre-commit feature $Color_Off"
 echo "alias pre-commit-init='cp ~/php-cs-fixer-pre-commit/pre-commit $(pwd)/.git/hooks/ && sudo chmod +x $(pwd)/.git/hooks/pre-commit'" >> ~/.bash_aliases
 source ~/.bash_aliases
-if [ ! -f ~//composer-setup.php ]; then
+if [ -f ~//composer-setup.php ]; then
 	rm ~/composer-setup.php
 fi
 echo -e "$Green \n Setting up complete, in order to use the pre-commit feature go to root project and run pre-commit-init $Color_Off"
