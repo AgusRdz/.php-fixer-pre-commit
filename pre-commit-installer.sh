@@ -54,7 +54,7 @@ if [ ! -f ~/.bash_aliases ]; then
 fi
 
 echo -e "$Cyan \n Creating alias to use pre-commit feature $Color_Off"
-echo "alias pre-commit-init='cp ~/php-cs-fixer-pre-commit/pre-commit $(pwd)/.git/hooks/ && sudo chmod +x $(pwd)/.git/hooks/pre-commit" >> ~/.bash_aliases
+sudo echo "alias pre-commit-init='cp ~/php-cs-fixer-pre-commit/pre-commit $(pwd)/.git/hooks/ && sudo chmod +x $(pwd)/.git/hooks/pre-commit" >> ~/.bash_aliases
 source ~/.bash_aliases
 rm composer-setup.php
 echo -e "$Green \n Setting up complete, in order to use the pre-commit feature go to root project and run pre-commit-init $Color_Off"
