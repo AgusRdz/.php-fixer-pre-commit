@@ -53,7 +53,7 @@ sudo chown -R $USER $HOME/.composer
 ## Move laravel fixet to /home
 echo -e "$Cyan \n Creating Laravel fixer $Color_Off"
 cd ~
-cp $(pwd)/php-cs-fixer-pre-commit/laravel-fixer.dist ~/.php_cs.dist
+cp $(pwd)/php-cs-fixer/laravel-fixer.dist ~/.php_cs.dist
 
 echo -e "$Cyan \n Creating alias to use pre-commit feature $Color_Off"
 if [ ! "$(grep '^alias pre-commit-init=' ~/.bashrc)" ]; then
