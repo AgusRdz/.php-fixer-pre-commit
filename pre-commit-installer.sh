@@ -56,15 +56,12 @@ echo -e "$Cyan \n Creating Laravel fixer $Color_Off"
 cd ~
 cp $(pwd)/php-cs-fixer-pre-commit/laravel-fixer.dist ~/.php_cs.dist
 
-## Add alias to create pre-co
-if [ ! -f ~/.bash_aliases ]; then
-	touch ~/.bash_aliases
-fi
-
 echo -e "$Cyan \n Creating alias to use pre-commit feature $Color_Off"
-echo "alias pre-commit-init='cp ~/php-cs-fixer-pre-commit/pre-commit $(pwd)/.git/hooks/ && sudo chmod +x $(pwd)/.git/hooks/pre-commit'" >> ~/.bash_aliases
-source ~/.bash_aliases
+echo "alias pre-commit-init=''cp $HOME/php-cs-fixer-pre-commit/pre-commit.example $(pwd)/.git/hooks/pre-commit.example && mv $(pwd)/.git/hooks/pre-commit.example $(pwd)/.git/hooks/pre-commit && sudo chmod +x $(pwd)/.git/hooks/pre-commit'" >> ~/.bashrc
+source ~/.bashrc
 if [ -f ~//composer-setup.php ]; then
 	rm ~/composer-setup.php
 fi
-echo -e "$Green \n Setting up complete, in order to use the pre-commit feature go to root project and run pre-commit-init $Color_Off"
+
+echo -e "$Green \n Setting up complete, in order to use the pre-commit-init feature go to root project and run pre-commit-init $Color_Off"
+
