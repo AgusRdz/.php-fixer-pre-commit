@@ -41,9 +41,10 @@ fi
 echo -e "$Yellow \n Checking if php-cs-fixer is already installed $Color_Off"
 if ! hash php-cs-fixer 2>/dev/null; then
 	echo -e "$Cyan \n Installing php-cs-fixer globally $Color_Off"
-	composer global require friendsofphp/php-cs-fixer
+	sudo composer global require friendsofphp/php-cs-fixer
 	echo -e "$Cyan \n Exporting $PATH $Color_Off"
-	export PATH="$PATH:$HOME/.composer/vendor/bin"
+	export PATH="~/.composer/vendor/bin:$PATH"
+	# export PATH="$PATH:$HOME/.composer/vendor/bin"
 else
 	echo -e "$Green \n php-cs-fixer is already installed $Color_Off"
 fi
