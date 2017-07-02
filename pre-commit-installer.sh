@@ -21,7 +21,8 @@ sudo apt-get install curl php-cli php-mbstring git unzip -y
 
 cd ~
 ## Get Composer installer
-if ! hash composer2 2>/dev/null; then
+echo -e "$Cyan \n Checking if Composer is already installed $Color_Off"
+if ! hash composer 2>/dev/null; then
 	echo -e "$Cyan \n Getting Composer installer $Color_Off"
 	curl -sS https://getcomposer.org/installer -o composer-setup.php
 
@@ -33,14 +34,19 @@ if ! hash composer2 2>/dev/null; then
 	echo -e "$Cyan \n Setting Composer globally $Color_Off"
 	sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 	echo -e "$Green \n Composer was installed globally, run composer command to display all commands supported $Color_Off"
+else
+	echo -e "$Cyan \n Composer is already installed $Color_Off"
 fi
 
 ## Install php-cs-fixer
+echo -e "$Cyan \n Checking if php-cs-fixer is already installed $Color_Off"
 if ! hash php-cs-fixer 2>/dev/null; then
 	echo -e "$Cyan \n Installing php-cs-fixer globally $Color_Off"
 	composer global require friendsofphp/php-cs-fixer
 	echo -e "$Cyan \n Exporting $PATH $Color_Off"
 	export PATH="$PATH:$HOME/.composer/vendor/bin"
+else
+	echo -e "$Cyan \n php-cs-fixer is already installed $Color_Off"
 fi
 
 ## Move laravel fixet to /home
@@ -50,7 +56,7 @@ cp php-cs-fixer-pre-commit/laravel-fixer.dist ~/.php_cs.dist
 
 ## Add alias to create pre-co
 if [ ! -f ~/.bash_aliases ]; then
-	touch ~/.bash_aliases
+	sudo touch ~/.bash_aliases
 fi
 
 echo -e "$Cyan \n Creating alias to use pre-commit feature $Color_Off"
