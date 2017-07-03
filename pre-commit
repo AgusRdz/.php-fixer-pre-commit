@@ -89,15 +89,7 @@
         foreach ($phpSyntaxErrors as $error) {
             echo "\t".$error . PHP_EOL;
         }
-    }
-
-    if ($phpCSErrors) {
-        echo "\e[36mIncorrect coding standards were detected and fixed.".PHP_EOL;
-        echo "List of changed files:".PHP_EOL;
-
-        foreach ($phpCSErrors as $error) {
-            echo "\t".$error.PHP_EOL;
-        }
+        exit(1);
     }
 
     $changedFiles = getStashedFiles($phpCsFixerFilePattern);
