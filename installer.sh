@@ -39,7 +39,7 @@ fi
 
 ## Install php-cs-fixer
 echo -e "$Yellow \n Checking if php-cs-fixer is already installed $Color_Off"
-if ! hash 'php-cs-fixer' 2>/dev/null; then
+if ! 'php-cs-fixer' --version >/dev/null 2>&1; then
 	echo -e "$Cyan \n Installing php-cs-fixer globally $Color_Off"
 	composer global require friendsofphp/php-cs-fixer
 	if [ ! "$(grep -r 'export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc)" ]; then
@@ -59,7 +59,7 @@ cp $(pwd)/config-rules.dist ~/.php_cs.dist
 
 echo -e "$Cyan \n Creating alias to use pre-commit feature $Color_Off"
 if [ ! "$(grep '^alias pre-commit-init=' ~/.bashrc)" ]; then
-	echo "alias pre-commit-init='cp $HOME/.php-fixer-pre-commit/pre-commit \$(pwd)/.git/hooks/pre-commit && sudo chmod +x \$(pwd)/.git/hooks/pre-commit' && " >> ~/.bashrc
+	echo "alias pre-commit-init='cp $HOME/php-fixer-pre-commit/pre-commit \$(pwd)/.git/hooks/pre-commit && sudo chmod +x \$(pwd)/.git/hooks/pre-commit' && " >> ~/.bashrc
 fi
 
 source $HOME/.bashrc
