@@ -54,20 +54,18 @@ currentuser=$(who | awk '{print $1}')
 sudo chown -R $currentuser:$currentuser $HOME/.composer
 
 ## Move laravel fixet to /home
-echo -e "$Cyan \n Creating Laravel fixer $Color_Off"
-cd ~
-cp $(pwd)/php-cs-fixer/laravel-fixer.dist ~/.php_cs.dist
+echo -e "$Cyan \n Creating fixer rules $Color_Off"
+cp $(pwd)/config-rules.dist ~/.php_cs.dist
 
 echo -e "$Cyan \n Creating alias to use pre-commit feature $Color_Off"
 if [ ! "$(grep '^alias pre-commit-init=' ~/.bashrc)" ]; then
-	echo "alias pre-commit-init='cp $HOME/php-cs-fixer/pre-commit \$(pwd)/.git/hooks/pre-commit && sudo chmod +x \$(pwd)/.git/hooks/pre-commit'" >> ~/.bashrc
+	echo "alias pre-commit-init='cp $HOME/.php-fixer-pre-commit/pre-commit \$(pwd)/.git/hooks/pre-commit && sudo chmod +x \$(pwd)/.git/hooks/pre-commit' && " >> ~/.bashrc
 fi
 
 source $HOME/.bashrc
 
-if [ -f ~//composer-setup.php ]; then
+if [ -f ~/composer-setup.php ]; then
 	rm ~/composer-setup.php
 fi
 
 echo -e "$Green \n Setting up complete, in order to use the pre-commit-init feature go to root project and run pre-commit-init $Color_Off"
-
