@@ -41,7 +41,7 @@ fi
 echo -e "$Yellow \n Checking if php-cs-fixer is already installed $Color_Off"
 if ! 'php-cs-fixer' --version >/dev/null 2>&1; then
 	echo -e "$Cyan \n Installing php-cs-fixer globally $Color_Off"
-	composer global require friendsofphp/php-cs-fixer
+	composer global require friendsofphp/php-cs-fixer --quiet
 	if [ ! "$(grep -r 'export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc)" ]; then
 		echo -e "$Cyan \n Exporting $PATH $Color_Off"
 		echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bashrc
@@ -53,7 +53,7 @@ fi
 currentuser=$(who | awk '{print $1}')
 sudo chown -R $currentuser:$currentuser $HOME/.composer
 
-## Move laravel fixet to /home
+## Move PSR1 and PSR2 rules to /home
 echo -e "$Cyan \n Creating fixer rules $Color_Off"
 cp ~/php-fixer-pre-commit/config-rules.dist ~/.php_cs.dist
 
