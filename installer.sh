@@ -10,6 +10,8 @@ Green='\033[0;32m'        # Green
 Yellow='\033[0;33m'       # Yellow
 Cyan='\033[0;36m'         # Cyan
 
+
+if [ ! hash composer 2>/dev/null ] || [ ! 'php-cs-fixer' --version >/dev/null 2>&1 ]; then
 ## Update package manager cache
 echo -e "$Yellow \n Updating package manager cache $Color_Off"
 apt-get update
@@ -17,6 +19,7 @@ apt-get update
 ## Install Composer Dependencies
 echo -e "$Cyan \n Installing Composer Dependencies $Color_Off"
 apt-get install curl php-cli php-mbstring git unzip -y
+fi
 
 cd ~
 ## Get Composer installer
