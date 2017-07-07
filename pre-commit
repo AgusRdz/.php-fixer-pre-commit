@@ -99,7 +99,6 @@
         echo PHP_EOL."\e[1;97;42mGood work, your code standards are under control.\e[0;39;49m".PHP_EOL.PHP_EOL;
     } else {
         echo PHP_EOL."\e[1;97;41mWhooops, ".$fixedFiles." files were fixed!!!\e[0;39;49m".PHP_EOL.PHP_EOL;
-        exec(sprintf("git add %s", $file));
     }
 
     if($fixedFiles > 0){
