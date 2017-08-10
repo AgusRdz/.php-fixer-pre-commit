@@ -32,7 +32,7 @@ use YDependency;
 use BDependency;
 
 class MyClass{
-  public function CalculatePrice () {
+  public function calculatePrice () {
       $a = 9 ;
      $b= 10 ;
    return $a + $b;
@@ -55,7 +55,7 @@ use YDependency;
 
 class MyClass
 {
-    public function CalculatePrice()
+    public function calculatePrice()
     {
         $a = 9;
         $b = 10;
