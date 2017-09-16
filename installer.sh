@@ -30,11 +30,12 @@ if ! hash composer 2>/dev/null; then
 
 	## Verify Composer installer
 	echo -e "$Cyan \n Verifying Composer installer $Color_Off"
-	php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+	php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 
 	## Set Composer globally
 	echo -e "$Cyan \n Setting Composer globally $Color_Off"
 	sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+	php -r "unlink('composer-setup.php');"
 	echo -e "$Green \n Composer was installed globally, run composer command to display all commands supported $Color_Off"
 else
 	echo -e "$Green \n Composer is already installed $Color_Off"
@@ -54,7 +55,8 @@ else
 fi
 
 currentuser=$(who | awk '{print $1}')
-sudo chown -R $currentuser:$currentuser $HOME/.composer
+#sudo chown -R $currentuser:$currentuser $HOME/.composer
+sudo chmod -R 0777 $HOME/.composer
 
 ## Move PSR1 and PSR2 rules to /home
 echo -e "$Cyan \n Creating fixer rules $Color_Off"
@@ -65,7 +67,8 @@ if [ ! "$(grep '^alias pre-commit-init=' ~/.bashrc)" ]; then
 	echo "alias pre-commit-init='cp $HOME/php-fixer-pre-commit/pre-commit \$(pwd)/.git/hooks/pre-commit && chmod +x \$(pwd)/.git/hooks/pre-commit'" >> ~/.bashrc
 fi
 
-sudo chown -R $currentuser:$currentuser $HOME/.bashrc
+#sudo chown -R $currentuser:$currentuser $HOME/.bashrc
+sudo chmod -R 0777 $HOME/.bashrc
 source $HOME/.bashrc
 
 if [ -f ~/composer-setup.php ]; then
